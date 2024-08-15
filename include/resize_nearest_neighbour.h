@@ -3,12 +3,6 @@
 
 #include "resize_image_base.h"
 
-/**
- * @brief Class for resizing images using nearest neighbour interpolation.
- * 
- * This class inherits from the resize_image_base and implements the resize method
- * using nearest neighbour interpolation, which is a simple and fast resizing technique.
- */
 class resize_nearest_neighbour : public resize_image_base {
 public:
     /**
@@ -17,9 +11,10 @@ public:
      * @param source The original image to be resized.
      * @param new_width The desired width of the resized image.
      * @param new_height The desired height of the resized image.
+     * @param matrix_size The size of the matrix for interpolation.
      * @return cimg_library::CImg<unsigned char> The resized image.
      */
-    cimg_library::CImg<unsigned char> resize(const cimg_library::CImg<unsigned char>& source, int new_width, int new_height) const override;
+    cimg_library::CImg<unsigned char> resize(const cimg_library::CImg<unsigned char>& source, int new_width, int new_height, int matrix_size) const override;
 
 protected:
     /**
@@ -29,9 +24,10 @@ protected:
      * @param x The x-coordinate of the position.
      * @param y The y-coordinate of the position.
      * @param channel The color channel to estimate.
+     * @param matrix_size The size of the matrix for interpolation.
      * @return unsigned char The estimated color value.
      */
-    unsigned char estimate_color(const cimg_library::CImg<unsigned char>& source, float x, float y, int channel) const override;
+    unsigned char estimate_color(const cimg_library::CImg<unsigned char>& source, float x, float y, int channel, int matrix_size) const override;
 };
 
 #endif // RESIZE_NEAREST_NEIGHBOUR_H
