@@ -9,6 +9,8 @@
  * This class inherits from the resize_image_base and implements the resize method
  * using nearest neighbour interpolation, which is a simple and fast resizing technique.
  */
+
+
 class resize_nearest_neighbour : public resize_image_base {
 public:
     /**

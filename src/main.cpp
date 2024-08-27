@@ -14,6 +14,8 @@ using namespace cimg_library;
  * @param scale_factor The factor by which to scale the image.
  * @param method The name of the resizing method (used for output filename and logging).
  */
+
+
 void resize_and_save(const resize_image_base& resizer, const CImg<unsigned char>& image, float scale_factor, const std::string& method) {
     // Calculate new dimensions based on the scale factor
     int new_width = static_cast<int>(image.width() * scale_factor);
@@ -24,7 +26,7 @@ void resize_and_save(const resize_image_base& resizer, const CImg<unsigned char>
 
     // Create the output filename based on the method and scale factor
     std::ostringstream output_filename;
-    output_filename << "lenna_resized_" << method << "_" << scale_factor << ".png";
+    output_filename << "lenna_resized_" << method << "_" << scale_factor << ".jpg";
 
     // Save the resized image to the output file
     resized_image.save(output_filename.str().c_str());
@@ -36,7 +38,7 @@ void resize_and_save(const resize_image_base& resizer, const CImg<unsigned char>
 
 int main() {
     // Load the original image from file
-    CImg<unsigned char> image("src/lenna.png");
+    CImg<unsigned char> image("src/lenna.jpg");
 
     // Create resizer objects for nearest neighbour and bilinear methods
     resize_nearest_neighbour nearest_neighbour_resizer;
@@ -44,6 +46,7 @@ int main() {
 
     // Scale factors to apply
     float scale_factors[] = {0.5, 0.75, 1.5, 2.0};
+    //float scale_factors[] = {2.25, 3.0, 3.75, 4.5, 5.25};
 
     // Loop through each scale factor and resize the image using both methods
     for (float scale_factor : scale_factors) {

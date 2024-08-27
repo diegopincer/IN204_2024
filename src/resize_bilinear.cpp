@@ -35,7 +35,7 @@ unsigned char resize_bilinear::estimate_color(const cimg_library::CImg<unsigned 
     float top = interpolate(source(x1, y1, 0, channel), source(x2, y1, 0, channel), x_frac);
     float bottom = interpolate(source(x1, y2, 0, channel), source(x2, y2, 0, channel), x_frac);
 
-    std::cout << "Bilinear estimate color at (" << x << ", " << y << ") in channel " << channel << std::endl;
+    //std::cout << "Bilinear estimate color at (" << x << ", " << y << ") in channel " << channel << std::endl;
 
     return static_cast<unsigned char>(interpolate(top, bottom, y_frac));
 }

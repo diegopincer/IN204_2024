@@ -28,6 +28,6 @@ unsigned char resize_nearest_neighbour::estimate_color(const cimg_library::CImg<
     int nearest_y = static_cast<int>(round(y));
     nearest_x = std::max(0, std::min(nearest_x, source.width() - 1));
     nearest_y = std::max(0, std::min(nearest_y, source.height() - 1));
-    std::cout << "Nearest neighbour estimate color at (" << nearest_x << ", " << nearest_y << ") in channel " << channel << std::endl;
+    //std::cout << "Nearest neighbour estimate color at (" << nearest_x << ", " << nearest_y << ") in channel " << channel << std::endl;
     return source(nearest_x, nearest_y, 0, channel);
 }

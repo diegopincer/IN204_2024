@@ -9,6 +9,7 @@
  * This class provides an interface for resizing images. Derived classes must implement
  * the resize method to provide specific resizing algorithms.
  */
+
 class resize_image_base {
 public:
     /**
