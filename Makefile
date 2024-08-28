@@ -1,30 +1,47 @@
+# Compiler
 CXX = g++
 
-CXXFLAGS = -Iinclude -O2
+# Compiler flags
+CXXFLAGS = -Iinclude -Wall -std=c++11
 
+# Linker flags for X11
 LDFLAGS = -lX11
 
-TARGET = build/resize_image
+# Directories
+SRCDIR = src
+INCDIR = include
+BUILDDIR = build
 
-SOURCES = src/main.cpp src/resize_nearest_neighbour.cpp src/resize_bilinear.cpp
+# Target executable
+TARGET = $(BUILDDIR)/main
 
-HEADERS = include/resize_image_base.h include/resize_nearest_neighbour.h include/resize_bilinear.h
+# Source files
+SRCFILES = $(SRCDIR)/main.cpp
 
-OBJECTS = $(SOURCES:.cpp=.o)
-OBJECTS := $(patsubst src/%,build/%,$(OBJECTS))
+# Object files
+OBJFILES = $(BUILDDIR)/main.o
 
-all: create_build_dir $(TARGET)
+# Default rule
+all: $(TARGET) copy_image
 
-create_build_dir:
-	mkdir -p build
+# Rule to link the executable
+$(TARGET): $(OBJFILES)
+	$(CXX) $(OBJFILES) -o $(TARGET) $(LDFLAGS)
 
-$(TARGET): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
-
-build/%.o: src/%.cpp $(HEADERS)
+# Rule to compile the source files
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-clean:
-	rm -f build/*.o $(TARGET)
+# Create the build directory if it doesn't exist
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
-.PHONY: all clean create_build_dir
+# Copy image to the build directory
+copy_image:
+	cp $(SRCDIR)/lenna.png $(BUILDDIR)/lenna.png
+
+# Clean up the build
+clean:
+	rm -rf $(BUILDDIR)
+
+.PHONY: all clean
