@@ -38,7 +38,7 @@ void resize_and_save(const resize_image_base& resizer, const CImg<unsigned char>
 
 int main() {
     // Load the original image from file
-    CImg<unsigned char> image("src/lenna.jpg");
+    CImg<unsigned char> image("images/lenna.jpg");
 
     // Create resizer objects for nearest neighbour and bilinear methods
     resize_nearest_neighbour nearest_neighbour_resizer;
