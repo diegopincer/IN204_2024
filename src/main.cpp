@@ -18,6 +18,7 @@ using namespace cimg_library;
  * @param extension The file extension for the output image.
  * @param matrix_size The size of the matrix used for interpolation.
  */
+
 void resize_and_save(const resize_image_base& resizer, const CImg<unsigned char>& image, float scale_factor, const std::string& method, const std::string& extension, int matrix_size) {
     int new_width = static_cast<int>(image.width() * scale_factor);
     int new_height = static_cast<int>(image.height() * scale_factor);
@@ -40,10 +41,10 @@ void resize_and_save(const resize_image_base& resizer, const CImg<unsigned char>
  */
 int main() {
     const std::vector<std::string> image_paths = {
-        "src/lenna.png",
-        "src/lenna.bmp",
-        "src/lenna.jpg",
-        "src/lenna.jp2"
+        "images/lenna.png",
+        "images/lenna.bmp",
+        "images/lenna.jpg",
+        "images/lenna.jp2"
     };
 
     const std::vector<std::string> extensions = {

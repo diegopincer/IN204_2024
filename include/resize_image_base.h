@@ -60,6 +60,8 @@ protected:
      * @param channel The color channel to extract.
      * @return std::vector<unsigned char> The neighborhood pixels.
      */
+
+    
     std::vector<unsigned char> get_neighborhood(const cimg_library::CImg<unsigned char>& source, int x, int y, int size, int channel) const {
         std::vector<unsigned char> neighborhood;
         int half_size = size / 2;
