@@ -10,6 +10,7 @@
  * using bilinear interpolation to achieve smoother resizing results compared to
  * nearest neighbour interpolation.
  */
+
 class resize_bilinear : public resize_image_base {
 public:
     /**
