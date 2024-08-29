@@ -1,6 +1,21 @@
 #include "CImg.h"
  
 using namespace cimg_library;
+
+/**
+ * @brief Displays an image and allows the user to interactively select a horizontal line to visualize the color intensity profile.
+ * 
+ * @param image The original image loaded from a file.
+ * @param visu A blank image used for drawing the intensity profiles.
+ * @param red An array representing the color red in RGB format.
+ * @param green An array representing the color green in RGB format.
+ * @param blue An array representing the color blue in RGB format.
+ * 
+ * @details The program loads an image, applies a blur effect, and displays it in a window. The user can click on any point in the image,
+ *          and the program will extract and display the intensity profiles of the red, green, and blue channels along the selected horizontal line. 
+ *          The profiles are displayed in a separate window.
+ */
+
  
 int main() {
   CImg<unsigned char> image("src/lenna.png"), visu(500,400,1,3,0);
