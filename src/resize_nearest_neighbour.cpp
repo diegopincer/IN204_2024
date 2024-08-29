@@ -41,9 +41,32 @@ cimg_library::CImg<unsigned char> resize_nearest_neighbour::resize(const cimg_li
  * @return unsigned char The estimated color value.
  */
 unsigned char resize_nearest_neighbour::estimate_color(const cimg_library::CImg<unsigned char>& source, float x, float y, int channel, int matrix_size) const {
+    int half_size = matrix_size / 2;
+    
     int nearest_x = static_cast<int>(round(x));
     int nearest_y = static_cast<int>(round(y));
+    
+    // Clamp to ensure we don't go out of bounds
     nearest_x = clamp(nearest_x, 0, source.width() - 1);
     nearest_y = clamp(nearest_y, 0, source.height() - 1);
-    return source(nearest_x, nearest_y, 0, channel);
+
+    float min_distance = std::numeric_limits<float>::max();
+    unsigned char best_color = source(nearest_x, nearest_y, 0, channel);
+
+    // Iterate over the neighborhood defined by matrix_size
+    for (int i = -half_size; i <= half_size; ++i) {
+        for (int j = -half_size; j <= half_size; ++j) {
+            int xi = clamp(nearest_x + i, 0, source.width() - 1);
+            int yj = clamp(nearest_y + j, 0, source.height() - 1);
+
+            float distance = std::sqrt((xi - x) * (xi - x) + (yj - y) * (yj - y));
+
+            if (distance < min_distance) {
+                min_distance = distance;
+                best_color = source(xi, yj, 0, channel);
+            }
+        }
+    }
+
+    return best_color;
 }

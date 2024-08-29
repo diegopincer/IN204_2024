@@ -39,20 +39,37 @@ cimg_library::CImg<unsigned char> resize_bilinear::resize(const cimg_library::CI
  * @param channel The color channel to estimate.
  * @return unsigned char The estimated color value.
  */
+
 unsigned char resize_bilinear::estimate_color(const cimg_library::CImg<unsigned char>& source, float x, float y, int channel, int matrix_size) const {
-    int x1 = static_cast<int>(x);
-    int y1 = static_cast<int>(y);
-    int x2 = std::min(x1 + 1, source.width() - 1);
-    int y2 = std::min(y1 + 1, source.height() - 1);
+    // Assuming matrix_size is always odd
+    int half_size = matrix_size / 2;
+    int x1 = std::max(0, static_cast<int>(x) - half_size);
+    int y1 = std::max(0, static_cast<int>(y) - half_size);
+    int x2 = std::min(x1 + matrix_size, source.width() - 1);
+    int y2 = std::min(y1 + matrix_size, source.height() - 1);
 
-    float x_frac = x - x1;
-    float y_frac = y - y1;
+    // Interpolation considering more pixels, depending on matrix_size
+    float color_sum = 0.0f;
+    float weight_sum = 0.0f;
 
-    float top = interpolate(source(x1, y1, 0, channel), source(x2, y1, 0, channel), x_frac);
-    float bottom = interpolate(source(x1, y2, 0, channel), source(x2, y2, 0, channel), x_frac);
+    for (int i = 0; i < matrix_size; ++i) {
+        for (int j = 0; j < matrix_size; ++j) {
+            int xi = std::min(x1 + i, source.width() - 1);
+            int yj = std::min(y1 + j, source.height() - 1);
 
-    return static_cast<unsigned char>(interpolate(top, bottom, y_frac));
+            // Calculates the weight based on the distance to x, y
+            float x_dist = std::abs(x - xi);
+            float y_dist = std::abs(y - yj);
+            float weight = 1.0f / ((x_dist + 1) * (y_dist + 1)); 
+
+            color_sum += source(xi, yj, 0, channel) * weight;
+            weight_sum += weight;
+        }
+    }
+
+    return static_cast<unsigned char>(color_sum / weight_sum);
 }
+
 /**
  * @brief Interpolates between two values.
  * 
